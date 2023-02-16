@@ -2,6 +2,15 @@
   "name": "@vinsurs/react-hooks",
   "description": "A opinionated react hooks lib",
   "private": false,
+  "author": {
+    "name": "vinsurs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Vinsurs/react-hooks.git"
+  },
+  "homepage": "https://github.com/Vinsurs/react-hooks",
+  "keywords": ["react-hooks", "hooks"],
   "files": ["dist"],
   "version": "0.1.0",
   "type": "module",
@@ -27,5 +36,6 @@
     "tslib": "^2.5.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
-  }
+  },
+  "license": "MIT"
 }
