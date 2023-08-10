@@ -5,6 +5,9 @@ import { useEffect } from "react"
  */
 export function useTitle(title: string) {
     useEffect(() => {
-        document.title = title
+        // support non-browser environment
+        if (window && window.document) {
+            document.title = title
+        }
     }, [title])
 }

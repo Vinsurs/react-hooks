@@ -20,20 +20,22 @@ import type { MutableRefObject } from "react"
  * ```
  *  */
 export function useSetState<S extends Record<keyof any, any>>(initialState: S | (() => S), syncRef = false ): [S, (patch: Partial<S> | ((prevState: S) => Partial<S>)) => void, MutableRefObject<S|undefined>] {
-    const stateRef = useRef<S>()
-    const [state, setState] = useState(initialState)
-    if (syncRef) stateRef.current = state
-    const patchState = useCallback((patch: Partial<S> | ((prevState: S) => Partial<S>)) => {
-      setState(prevState => {
-        const newState = {
+  const stateRef = useRef<S>()
+  const [state, setState] = useState(initialState)
+  if (syncRef) stateRef.current = state
+  const patchState = useCallback((patch: Partial<S> | ((prevState: S) => Partial<S>)) => {
+    setState(prevState => {
+      return getNextState(prevState)
+    })
+    if (syncRef) {
+      stateRef.current = getNextState(stateRef.current as S)
+    }
+    function getNextState(prevState: S) {
+      return {
           ...prevState,
           ...typeof patch === "function" ? patch(prevState) : patch
-        }
-        if (syncRef) {
-          stateRef.current = newState
-        }
-        return newState
-      })
-    }, [])
-    return [state, patchState, stateRef]
-  }
+      }
+    }
+  }, [])
+  return [state, patchState, stateRef]
+}
